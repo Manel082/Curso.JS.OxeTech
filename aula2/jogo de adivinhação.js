@@ -1,9 +1,9 @@
-let numeroAleatorio = Math.floor(Math.random() * 100) + 1;
-let tentativas = 0;
-let palpite;
+let numeroAleatorio = Math.floor(Math.random() * 100) + 1
+let tentativas = 0
+let palpite
 
 do {
-    palpite = parseInt(prompt("Adivinhe o número entre 1 e 100:"));
+    palpite = parseInt(prompt("Adivinhe o número entre 1 e 100:"))
     tentativas++;
 
     if (palpite < numeroAleatorio) {
