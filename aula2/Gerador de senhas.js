@@ -1,0 +1,6 @@
+let palavraUsuario = prompt("Digite uma palavra para transformar em senha segura:")
+let senha = palavraUsuario.trim()
+senha = senha.replace(/a/gi, '@')
+senha = senha.replace(/f/gi, '1')
+senha = senha.replace(/o/gi, '0')
+console.log("Senha segura:", senha)
