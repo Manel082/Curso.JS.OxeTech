@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 3</title>
+</head>
+<body>
+    <label for="campo">Digite algo:</label>
+    <input type="text" id="campo">
+    <p id="tecla"></p>
+
+    <script>
+        const campoInput = document.getElementById('campo');
+        const paragrafoTecla = document.getElementById('tecla');
+
+        campoInput.addEventListener('keydown', (event) => {
+            
+            paragrafoTecla.textContent = `Tecla pressionada: ${event.key} (Código: ${event.code})`;
+            
+            paragrafoTecla.style.fontWeight = 'bold';
+            paragrafoTecla.style.color = 'blue';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio 2</title>
+    <style>
+        #caixa {
+            width: 200px;
+            height: 200px;
+            background-color: lightgray;
+            text-align: center;
+            line-height: 200px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="caixa">Passe o mouse</div>
+    <p id="coords"></p>
+
+    <script>
+        const caixa = document.getElementById('caixa');
+        const coords = document.getElementById('coords');
+
+        caixa.addEventListener('click', () => {
+            caixa.style.backgroundColor = 'blue';
+        });
+
+        caixa.addEventListener('dblclick', () => {
+            caixa.style.backgroundColor = 'green';
+        });
+
+        caixa.addEventListener('mousedown', () => {
+            caixa.style.backgroundColor = 'red';
+        });
+
+        caixa.addEventListener('mouseup', () => {
+            caixa.style.backgroundColor = 'purple';
+        });
+
+        caixa.addEventListener('mousemove', (e) => {
+            const x = e.clientX - caixa.getBoundingClientRect().left;
+            const y = e.clientY - caixa.getBoundingClientRect().top;
+            coords.textContent = `X: ${x.toFixed(0)}, Y: ${y.toFixed(0)}`;
+        });
+
+        caixa.addEventListener('mouseenter', () => {
+            alert('Entrou na área!');
+        });
+
+        caixa.addEventListener('mouseleave', () => {
+            alert('Saiu da área!');
+        });
+    </script>
+</body>
+</html>
