@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação - Gerenciador de Contatos</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --radius: 16px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            background: linear-gradient(135deg, white 0%, #f8f9fa 100%);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin: 0;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 1rem 0;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--accent);
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .demo-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .screenshot {
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin: 1rem 0;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerenciador de Contatos</h1>
+            <p>Um projeto completo com CRUD, validações e armazenamento local</p>
+        </header>
+        
+        <section>
+            <h2>🔍 Visão Geral</h2>
+            <div class="card">
+                <p>Este projeto é um gerenciador de contatos completo desenvolvido com tecnologias web modernas. Permite adicionar, editar, visualizar e excluir contatos com validações robustas e armazenamento persistente.</p>
+                
+                <div style="margin-top: 1.5rem;">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">LocalStorage</span>
+                    <span class="tech-badge">Responsivo</span>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>✨ Principais Funcionalidades</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="feature">
+                        <div class="feature-icon">📱</div>
+                        <div>
+                            <h3>Validação de Telefone</h3>
+                            <p>Formato automático (XX) XXXXX-XXXX com verificação de DDD e máscara em tempo real.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="feature">
+                        <div class="feature-icon">✉️</div>
+                        <div>
+                            <h3>Validação de E-mail</h3>
+                            <p>Verificação de formato válido e prevenção contra duplicatas.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="feature">
+                        <div class="feature-icon">💾</div>
+                        <div>
+                            <h3>Armazenamento Local</h3>
+                            <p>Persistência de dados usando localStorage mesmo após recarregar a página.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="feature">
+                        <div class="feature-icon">🔍</div>
+                        <div>
+                            <h3>Busca Instantânea</h3>
+                            <p>Filtro de contatos em tempo real enquanto digita.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="codigo">
+            <h2>💻 Destaques do Código</h2>
+            
+            <div class="card">
+                <h3>Validação de Telefone</h3>
+                <div class="code-block">
+                    <pre>function validatePhone(phone) {
+    const regex = /^\(\d{2}\) \d{4,5}-\d{4}$/;
+    return regex.test(phone);
+}
+
+function formatPhone(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 0) {
+        value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+        value = value.replace(/(\d{5})(\d)/, '$1-$2');
+    }
+    input.value = value.substring(0, 15);
+}</pre>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>CRUD com LocalStorage</h3>
+                <div class="code-block">
+                    <pre>// Salvar contatos
+function saveContacts() {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+}
+
+// Carregar contatos
+function loadContacts() {
+    return JSON.parse(localStorage.getItem('contacts')) || [];
+}
+
+// Adicionar novo contato
+function addContact(contact) {
+    contacts.push(contact);
+    saveContacts();
+}</pre>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>📚 Aprendizados</h2>
+            <div class="card">
+                <ul style="line-height: 2;">
+                    <li>Funções de tratamento do código</li>
+                    <li>Design responsivo e acessível</li>
+                    <li>Gerenciamento de estado em JavaScript puro</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section>
+            <h2>🚀 Próximos Passos</h2>
+            <div class="card">
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <div>
+                        <h3>Sincronização com Nuvem</h3>
+                        <p>Integração com Firebase ou outra API para backup online.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📤</div>
+                    <div>
+                        <h3>Exportação de Dados</h3>
+                        <p>Gerar arquivos CSV ou JSON para backup.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🖼️</div>
+                    <div>
+                        <h3>Fotos de Contatos</h3>
+                        <p>Upload e armazenamento de imagens.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Projeto desenvolvido como parte do curso de JavaScript da OxeTech</p>
+            <p>© 2025 - Todos os direitos reservados</p>
+        </footer>
+    </div>
+</body>
+</html>
