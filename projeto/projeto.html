@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Contatos</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --danger: #ff5252;
+            --success: #4caf50;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --radius: 12px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        h1, h2 {
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 0.5rem 0;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius);
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .btn-edit {
+            background-color: var(--accent);
+        }
+        
+        .contacts-list {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .contact-item {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-radius: calc(var(--radius) - 4px);
+        }
+        
+        .contact-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+        
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+        
+        .contact-info h3 {
+            margin: 0 0 5px 0;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .contact-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        
+        .contact-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-container {
+            margin-bottom: 25px;
+        }
+        
+        #search {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        #search:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .error {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            padding-left: 5px;
+        }
+        
+        input.invalid {
+            border-color: var(--danger);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 600px) {
+            .contact-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .contact-actions {
+                margin-top: 15px;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerenciador de Contatos</h1>
+    
+    <div class="form-container">
+        <h2 id="form-title">Adicionar Contato</h2>
+        <form id="contact-form">
+            <input type="hidden" id="contact-id">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefone:</label>
+                <input type="tel" id="phone" placeholder="(99) 99999-9999" required>
+                <div class="error" id="phone-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" required>
+                <div class="error" id="email-error"></div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" id="save-btn">Salvar</button>
+                <button type="button" id="cancel-btn" class="hidden">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="search" placeholder="🔍 Pesquisar contatos...">
+    </div>
+
+    <div class="contacts-list">
+        <h2>Lista de Contatos</h2>
+        <div id="contacts-container">
+            <!-- Contatos serão exibidos aqui -->
+        </div>
+    </div>
+
+    <script>
+        // [Todo o código JavaScript permanece exatamente o mesmo]
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+        let isEditing = false;
+        let currentEditId = null;
+
+        const contactForm = document.getElementById('contact-form');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+        const contactIdInput = document.getElementById('contact-id');
+        const contactsContainer = document.getElementById('contacts-container');
+        const searchInput = document.getElementById('search');
+        const saveBtn = document.getElementById('save-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const formTitle = document.getElementById('form-title');
+        const phoneError = document.getElementById('phone-error');
+        const emailError = document.getElementById('email-error');
+
+        function validatePhone(phone) {
+            const regex = /^\(\d{2}\) \d{4,5}-\d{4}$/;
+            return regex.test(phone);
+        }
+
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        function isDuplicateContact(newContact, editingId = null) {
+            return contacts.some(contact => {
+                if (editingId && contact.id === editingId) return false;
+                return contact.phone === newContact.phone || contact.email === newContact.email;
+            });
+        }
+
+        function formatPhone(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            }
+            input.value = value.substring(0, 15);
+            return value;
+        }
+
+        function showError(input, message, errorElement) {
+            input.classList.add('invalid');
+            errorElement.textContent = message;
+        }
+
+        function clearErrors() {
+            phoneInput.classList.remove('invalid');
+            emailInput.classList.remove('invalid');
+            phoneError.textContent = '';
+            emailError.textContent = '';
+        }
+
+        function validateForm(name, phone, email, editingId = null) {
+            let isValid = true;
+            clearErrors();
+
+            if (!name) {
+                showError(nameInput, 'Por favor, insira um nome.', nameInput.nextElementSibling);
+                isValid = false;
+            }
+
+            if (!validatePhone(phone)) {
+                showError(phoneInput, 'Formato inválido. Use (DDD) 9XXXX-XXXX', phoneError);
+                isValid = false;
+            }
+
+            if (!validateEmail(email)) {
+                showError(emailInput, 'Por favor, insira um e-mail válido.', emailError);
+                isValid = false;
+            }
+
+            const newContact = { name, phone, email };
+            if (isDuplicateContact(newContact, editingId)) {
+                showError(emailInput, 'Já existe um contato com este e-mail ou telefone.', emailError);
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function saveContacts() {
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+        }
+
+        function renderContacts(contactsToRender = contacts) {
+            contactsContainer.innerHTML = '';
+            
+            if (contactsToRender.length === 0) {
+                contactsContainer.innerHTML = '<div class="empty-state">Nenhum contato cadastrado. Adicione seu primeiro contato!</div>';
+                return;
+            }
+
+            const sortedContacts = [...contactsToRender].sort((a, b) => a.name.localeCompare(b.name));
+
+            sortedContacts.forEach(contact => {
+                const contactElement = document.createElement('div');
+                contactElement.className = 'contact-item';
+                contactElement.innerHTML = `
+                    <div class="contact-info">
+                        <h3>${contact.name}</h3>
+                        <p>📞 ${contact.phone}</p>
+                        <p>✉️ ${contact.email}</p>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="btn-edit" data-id="${contact.id}">Editar</button>
+                        <button class="btn-danger" data-id="${contact.id}">Excluir</button>
+                    </div>
+                `;
+                contactsContainer.appendChild(contactElement);
+            });
+
+            document.querySelectorAll('.btn-danger').forEach(btn => {
+                btn.addEventListener('click', handleDelete);
+            });
+
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', handleEdit);
+            });
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            formatPhone(phoneInput);
+            const phoneValue = phoneInput.value;
+            const nameValue = nameInput.value;
+            const emailValue = emailInput.value;
+
+            if (!validateForm(nameValue, phoneValue, emailValue, currentEditId)) {
+                return;
+            }
+
+            const contactData = {
+                id: isEditing ? currentEditId : Date.now().toString(),
+                name: nameValue,
+                phone: phoneValue,
+                email: emailValue
+            };
+
+            if (isEditing) {
+                const index = contacts.findIndex(c => c.id === currentEditId);
+                if (index !== -1) {
+                    contacts[index] = contactData;
+                }
+            } else {
+                contacts.push(contactData);
+            }
+
+            saveContacts();
+            renderContacts();
+            resetForm();
+        }
+
+        function handleDelete(e) {
+            const id = e.target.getAttribute('data-id');
+            contacts = contacts.filter(contact => contact.id !== id);
+            saveContacts();
+            renderContacts();
+        }
+
+        function handleEdit(e) {
+            const id = e.target.getAttribute('data-id');
+            const contactToEdit = contacts.find(contact => contact.id === id);
+            
+            if (contactToEdit) {
+                isEditing = true;
+                currentEditId = id;
+                contactIdInput.value = contactToEdit.id;
+                nameInput.value = contactToEdit.name;
+                phoneInput.value = contactToEdit.phone;
+                emailInput.value = contactToEdit.email;
+                saveBtn.textContent = 'Atualizar';
+                formTitle.textContent = 'Editar Contato';
+                cancelBtn.classList.remove('hidden');
+            }
+        }
+
+        function resetForm() {
+            contactForm.reset();
+            isEditing = false;
+            currentEditId = null;
+            contactIdInput.value = '';
+            saveBtn.textContent = 'Salvar';
+            formTitle.textContent = 'Adicionar Contato';
+            cancelBtn.classList.add('hidden');
+            clearErrors();
+        }
+
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredContacts = contacts.filter(contact => 
+                contact.name.toLowerCase().includes(searchTerm) ||
+                contact.phone.includes(searchTerm) ||
+                contact.email.toLowerCase().includes(searchTerm)
+            );
+            renderContacts(filteredContacts);
+        }
+
+        contactForm.addEventListener('submit', handleSubmit);
+        cancelBtn.addEventListener('click', resetForm);
+        searchInput.addEventListener('input', handleSearch);
+        phoneInput.addEventListener('input', function() {
+            formatPhone(this);
+        });
+
+        renderContacts();
+    </script>
+</body>
+</html>
