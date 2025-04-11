@@ -246,12 +246,10 @@
     <div class="contacts-list">
         <h2>Lista de Contatos</h2>
         <div id="contacts-container">
-            <!-- Contatos serão exibidos aqui -->
         </div>
     </div>
 
     <script>
-        // [Todo o código JavaScript permanece exatamente o mesmo]
         let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
         let isEditing = false;
         let currentEditId = null;
