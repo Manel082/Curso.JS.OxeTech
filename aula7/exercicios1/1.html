@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 1</title>
+    <style>
+        .destaque {
+            border: 1px solid red;
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <p>Clique em mim!</p>
+    </div>
+
+    <script>
+
+        const paragrafo = document.querySelector('p');
+        
+        paragrafo.addEventListener('click', function() {
+            
+            const container = this.parentElement;
+            
+            container.classList.toggle('destaque');
+        });
+    </script>
+</body>
+</html>

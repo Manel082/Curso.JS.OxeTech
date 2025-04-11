@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 4</title>
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+    </ul>
+    <button id="resetBtn">Reset</button>
+
+    <script>
+        
+        const items = document.querySelectorAll('li');
+        const resetBtn = document.getElementById('resetBtn');
+
+        items.forEach(item => {
+            item.addEventListener('click', function() {
+                
+                resetStyles();
+                
+                const next = this.nextElementSibling;
+                const prev = this.previousElementSibling;
+                
+                if (next) next.classList.add('bold');
+                if (prev) prev.classList.add('underline');
+            });
+        });
+
+        function resetStyles() {
+            items.forEach(item => {
+                item.classList.remove('bold', 'underline');
+            });
+        }
+
+        resetBtn.addEventListener('click', resetStyles);
+    </script>
+</body>
+</html>

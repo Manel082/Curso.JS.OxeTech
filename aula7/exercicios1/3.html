@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio 3</title>
+    <style>
+        .destaque1 {
+            color: red;
+            background-color: lightcoral;
+        }
+        .destaque2 {
+            color: blue;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <p>Item 1</p>
+        <p>Item 2</p>
+        <p>Item 3</p>
+        <p>Item 4</p>
+    </div>
+    <button id="firstBtn">Mudar Estilo Primeiro</button>
+    <button id="lastBtn">Mudar Estilo Último</button>
+
+    <script>
+        
+        const box = document.getElementById('box');
+        const firstBtn = document.getElementById('firstBtn');
+        const lastBtn = document.getElementById('lastBtn');
+
+        firstBtn.addEventListener('click', function() {
+            const firstChild = box.firstElementChild;
+            firstChild.classList.toggle('destaque1');
+        });
+
+        lastBtn.addEventListener('click', function() {
+            const lastChild = box.lastElementChild;
+            lastChild.classList.toggle('destaque2');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercício 4</title>
+</head>
+<body>
+    <ul id="myList">
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+    <button id="insertItem">Inserir Antes</button>
+
+    <script>
+        document.getElementById('insertItem').addEventListener('click', function() {
+            const lista = document.getElementById('myList');
+            const segundoItem = lista.children[1];
+            
+            const itens = lista.getElementsByTagName('li');
+            let itemJaExiste = false;
+            
+            for (let i = 0; i < itens.length; i++) {
+                if (itens[i].textContent === 'Item inserido antes do segundo') {
+                    itemJaExiste = true;
+                    break;
+                }
+            }
+            
+            if (!itemJaExiste) {
+                const novoItem = document.createElement('li');
+                novoItem.textContent = 'Item inserido antes do segundo';
+                lista.insertBefore(novoItem, segundoItem);
+                alert('Novo item adicionado com sucesso!');
+            } else {
+                alert('O item especial já foi adicionado anteriormente!');
+            }
+        });
+    </script>
+</body>
+</html>
